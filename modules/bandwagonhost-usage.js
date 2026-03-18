@@ -5,11 +5,16 @@ const API_BASE = "https://api.64clouds.com/v1/getServiceInfo";
 
 // --- Helpers ---
 
+const Ki = 1024;
+const Mi = Ki * 1024;
+const Gi = Mi * 1024;
+const Ti = Gi * 1024;
+
 function formatBytes(bytes) {
-  if (bytes >= 1e12) return (bytes / 1e12).toFixed(2) + " TB";
-  if (bytes >= 1e9) return (bytes / 1e9).toFixed(2) + " GB";
-  if (bytes >= 1e6) return (bytes / 1e6).toFixed(1) + " MB";
-  return (bytes / 1e3).toFixed(0) + " KB";
+  if (bytes >= Ti) return (bytes / Ti).toFixed(2) + " TB";
+  if (bytes >= Gi) return (bytes / Gi).toFixed(2) + " GB";
+  if (bytes >= Mi) return (bytes / Mi).toFixed(1) + " MB";
+  return (bytes / Ki).toFixed(0) + " KB";
 }
 
 function usageColor(ratio) {
