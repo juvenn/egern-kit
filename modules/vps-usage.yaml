@@ -1,0 +1,21 @@
+name: "VPS Usage"
+description: "Display VPS data usage on widgets"
+author: "juvenn"
+
+scriptings:
+  - generic:
+      name: "bandwagonhost-usage"
+      script_url: "https://raw.githubusercontent.com/juvenn/egern-kit/main/modules/bandwagonhost-usage.js"
+      timeout: 15
+
+widgets:
+  - name: "bandwagonhost-usage"
+
+# Module env (set VEID and API_KEY when installing):
+#
+#   modules:
+#     - url: "https://raw.githubusercontent.com/juvenn/egern-kit/main/modules/vps-usage.yaml"
+#       enabled: true
+#       env:
+#         VEID: "your_veid_here"
+#         API_KEY: "your_api_key_here"
