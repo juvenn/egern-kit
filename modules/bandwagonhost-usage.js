@@ -61,10 +61,7 @@ function progressBar(ratio, color, height) {
   return {
     type: "stack",
     direction: "row",
-    gap: 1,
     children,
-    backgroundColor: "rgba(255,255,255,0.08)",
-    borderRadius: height / 2,
   };
 }
 
@@ -157,18 +154,9 @@ function buildSmall(d) {
         ],
       },
       { type: "spacer" },
-      // Usage text
-      {
-        type: "text",
-        text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data),
-        font: { size: "callout", weight: "semibold" },
-        textColor: "#FFFFFF",
-        maxLines: 1,
-        minScale: 0.7,
-      },
       // Progress bar
       progressBar(ratio, color, 8),
-      // Footer: percentage + reset days
+      // Usage (left) + reset days (right)
       {
         type: "stack",
         direction: "row",
@@ -176,9 +164,11 @@ function buildSmall(d) {
         children: [
           {
             type: "text",
-            text: (ratio * 100).toFixed(1) + "%",
-            font: { size: "caption1", weight: "semibold" },
-            textColor: color,
+            text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data),
+            font: { size: "caption1", weight: "medium" },
+            textColor: "#FFFFFFCC",
+            maxLines: 1,
+            minScale: 0.7,
           },
           { type: "spacer" },
           {
@@ -241,81 +231,29 @@ function buildMedium(d) {
         ],
       },
       { type: "spacer" },
-      // Main content: two columns
+      // Progress bar
+      progressBar(ratio, color, 8),
+      // Usage (left) + remaining + reset (right)
       {
         type: "stack",
         direction: "row",
-        gap: 16,
-        alignItems: "end",
+        alignItems: "center",
         children: [
-          // Left: usage info
           {
-            type: "stack",
-            direction: "column",
-            gap: 5,
-            flex: 1,
-            children: [
-              {
-                type: "text",
-                text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data),
-                font: { size: "callout", weight: "semibold" },
-                textColor: "#FFFFFF",
-                maxLines: 1,
-                minScale: 0.7,
-              },
-              progressBar(ratio, color, 8),
-            ],
+            type: "text",
+            text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data),
+            font: { size: "caption1", weight: "medium" },
+            textColor: "#FFFFFFCC",
+            maxLines: 1,
+            minScale: 0.7,
           },
-          // Right: details
+          { type: "spacer" },
           {
-            type: "stack",
-            direction: "column",
-            gap: 3,
-            alignItems: "end",
-            children: [
-              {
-                type: "stack",
-                direction: "row",
-                alignItems: "center",
-                gap: 4,
-                children: [
-                  {
-                    type: "image",
-                    src: "sf-symbol:arrow.down.circle.fill",
-                    color: "#FFFFFFAA",
-                    width: 11,
-                    height: 11,
-                  },
-                  {
-                    type: "text",
-                    text: formatBytes(remaining) + " left",
-                    font: { size: "caption1" },
-                    textColor: "#FFFFFFAA",
-                  },
-                ],
-              },
-              {
-                type: "stack",
-                direction: "row",
-                alignItems: "center",
-                gap: 4,
-                children: [
-                  {
-                    type: "image",
-                    src: "sf-symbol:clock.arrow.circlepath",
-                    color: "#FFFFFFAA",
-                    width: 11,
-                    height: 11,
-                  },
-                  {
-                    type: "text",
-                    text: days + "d (" + formatResetDate(d.data_next_reset) + ")",
-                    font: { size: "caption1" },
-                    textColor: "#FFFFFFAA",
-                  },
-                ],
-              },
-            ],
+            type: "text",
+            text: formatBytes(remaining) + " left · " + days + "d (" + formatResetDate(d.data_next_reset) + ")",
+            font: { size: "caption1" },
+            textColor: "#FFFFFFAA",
+            maxLines: 1,
           },
         ],
       },
