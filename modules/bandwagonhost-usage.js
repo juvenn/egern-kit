@@ -18,9 +18,9 @@ function formatBytes(bytes) {
 }
 
 function usageColor(ratio) {
-  if (ratio < 0.6) return "#34C759";
-  if (ratio < 0.85) return "#FF9F0A";
-  return "#FF3B30";
+  if (ratio < 0.6) return "#34D399";
+  if (ratio < 0.85) return "#FBBF24";
+  return "#F87171";
 }
 
 function daysUntil(timestamp) {
@@ -35,33 +35,33 @@ function formatResetDate(timestamp) {
 }
 
 function progressBar(ratio, color, height) {
-  const pct = Math.min(Math.max(ratio, 0), 1);
-  const filled = Math.round(pct * 100);
-  const empty = 100 - filled;
-  const children = [
-    {
-      type: "stack",
-      height: height,
-      flex: filled || 1,
-      backgroundColor: color,
-      borderRadius: height / 2,
-      children: [],
-    },
-  ];
-  if (empty > 0) {
-    children.push({
-      type: "stack",
-      height: height,
-      flex: empty,
-      backgroundColor: "rgba(255,255,255,0.15)",
-      borderRadius: height / 2,
-      children: [],
-    });
-  }
+  const pct = Math.min(Math.max(ratio, 0.01), 1);
   return {
     type: "stack",
     direction: "row",
-    children,
+    height: height,
+    borderRadius: height / 2,
+    backgroundColor: "#FFFFFF1A",
+    children: [
+      {
+        type: "stack",
+        flex: pct,
+        height: height,
+        borderRadius: height / 2,
+        backgroundGradient: {
+          type: "linear",
+          colors: [color, color + "99"],
+          startPoint: { x: 0, y: 0 },
+          endPoint: { x: 1, y: 0 },
+        },
+        children: [],
+      },
+      {
+        type: "stack",
+        flex: 1 - pct,
+        children: [],
+      },
+    ],
   };
 }
 
@@ -72,12 +72,7 @@ function errorWidget(message) {
     type: "widget",
     padding: 16,
     gap: 8,
-    backgroundGradient: {
-      type: "linear",
-      colors: ["#1A1A2E", "#16213E"],
-      startPoint: { x: 0, y: 0 },
-      endPoint: { x: 1, y: 1 },
-    },
+    backgroundColor: { light: "#1C1C1E", dark: "#1C1C1E" },
     children: [
       {
         type: "stack",
@@ -88,15 +83,15 @@ function errorWidget(message) {
           {
             type: "image",
             src: "sf-symbol:exclamationmark.triangle.fill",
-            color: "#FF9F0A",
-            width: 16,
-            height: 16,
+            color: "#FBBF24",
+            width: 14,
+            height: 14,
           },
           {
             type: "text",
             text: "BandwagonHost",
-            font: { size: "headline", weight: "bold" },
-            textColor: "#FFFFFF",
+            font: { size: "caption1", weight: "semibold" },
+            textColor: "#FFFFFF99",
           },
         ],
       },
@@ -105,7 +100,7 @@ function errorWidget(message) {
         type: "text",
         text: message,
         font: { size: "caption1" },
-        textColor: "#FF9F0A",
+        textColor: "#FBBF24",
       },
     ],
   };
@@ -120,14 +115,9 @@ function buildSmall(d) {
 
   return {
     type: "widget",
-    padding: 14,
-    gap: 6,
-    backgroundGradient: {
-      type: "linear",
-      colors: ["#1A1A2E", "#16213E"],
-      startPoint: { x: 0, y: 0 },
-      endPoint: { x: 1, y: 1 },
-    },
+    padding: 16,
+    gap: 10,
+    backgroundColor: { light: "#1C1C1E", dark: "#1C1C1E" },
     refreshAfter: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
     children: [
       // Header
@@ -140,23 +130,22 @@ function buildSmall(d) {
           {
             type: "image",
             src: "sf-symbol:server.rack",
-            color: "#007AFF",
-            width: 15,
-            height: 15,
+            width: 14,
+            height: 14,
+            color: "#FFFFFF99",
           },
           {
             type: "text",
             text: "BandwagonHost",
-            font: { size: "subheadline", weight: "bold" },
-            textColor: "#FFFFFF",
-            maxLines: 1,
+            font: { size: "caption1", weight: "semibold" },
+            textColor: "#FFFFFF99",
           },
         ],
       },
       { type: "spacer" },
       // Progress bar
-      progressBar(ratio, color, 8),
-      // Usage (left) + reset days (right)
+      progressBar(ratio, color, 6),
+      // Label (left) + percentage (right)
       {
         type: "stack",
         direction: "row",
@@ -173,9 +162,9 @@ function buildSmall(d) {
           { type: "spacer" },
           {
             type: "text",
-            text: days + "d to reset",
-            font: { size: "caption1" },
-            textColor: "#FFFFFFAA",
+            text: Math.round(ratio * 100) + "%",
+            font: { size: "caption1", weight: "bold", family: "Menlo" },
+            textColor: color,
           },
         ],
       },
@@ -191,14 +180,9 @@ function buildMedium(d) {
 
   return {
     type: "widget",
-    padding: 14,
-    gap: 0,
-    backgroundGradient: {
-      type: "linear",
-      colors: ["#1A1A2E", "#16213E"],
-      startPoint: { x: 0, y: 0 },
-      endPoint: { x: 1, y: 1 },
-    },
+    padding: 16,
+    gap: 10,
+    backgroundColor: { light: "#1C1C1E", dark: "#1C1C1E" },
     refreshAfter: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
     children: [
       // Header
@@ -211,29 +195,22 @@ function buildMedium(d) {
           {
             type: "image",
             src: "sf-symbol:server.rack",
-            color: "#007AFF",
-            width: 16,
-            height: 16,
+            width: 14,
+            height: 14,
+            color: "#FFFFFF99",
           },
           {
             type: "text",
             text: "BandwagonHost",
-            font: { size: "headline", weight: "bold" },
-            textColor: "#FFFFFF",
-          },
-          { type: "spacer" },
-          {
-            type: "text",
-            text: (ratio * 100).toFixed(1) + "%",
-            font: { size: "headline", weight: "bold" },
-            textColor: color,
+            font: { size: "caption1", weight: "semibold" },
+            textColor: "#FFFFFF99",
           },
         ],
       },
       { type: "spacer" },
       // Progress bar
-      progressBar(ratio, color, 8),
-      // Usage (left) + remaining + reset (right)
+      progressBar(ratio, color, 6),
+      // Label (left) + percentage (right)
       {
         type: "stack",
         direction: "row",
@@ -241,7 +218,7 @@ function buildMedium(d) {
         children: [
           {
             type: "text",
-            text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data),
+            text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data) + " · " + days + "d to reset",
             font: { size: "caption1", weight: "medium" },
             textColor: "#FFFFFFCC",
             maxLines: 1,
@@ -250,10 +227,9 @@ function buildMedium(d) {
           { type: "spacer" },
           {
             type: "text",
-            text: formatBytes(remaining) + " left · " + days + "d (" + formatResetDate(d.data_next_reset) + ")",
-            font: { size: "caption1" },
-            textColor: "#FFFFFFAA",
-            maxLines: 1,
+            text: Math.round(ratio * 100) + "%",
+            font: { size: "caption1", weight: "bold", family: "Menlo" },
+            textColor: color,
           },
         ],
       },
@@ -284,7 +260,7 @@ function buildAccessoryRectangular(d) {
           },
           {
             type: "text",
-            text: "BWH " + (ratio * 100).toFixed(1) + "%",
+            text: "BWH " + Math.round(ratio * 100) + "%",
             font: { size: "caption1", weight: "bold" },
             maxLines: 1,
           },
@@ -312,8 +288,8 @@ function buildAccessoryCircular(d) {
       { type: "spacer" },
       {
         type: "text",
-        text: (ratio * 100).toFixed(0) + "%",
-        font: { size: "title3", weight: "bold" },
+        text: Math.round(ratio * 100) + "%",
+        font: { size: "title3", weight: "bold", family: "Menlo" },
         textAlign: "center",
       },
       {
@@ -336,7 +312,7 @@ function buildAccessoryInline(d) {
     children: [
       {
         type: "text",
-        text: "BWH " + (ratio * 100).toFixed(1) + "% | " + formatBytes(d.data_counter),
+        text: "BWH " + Math.round(ratio * 100) + "% | " + formatBytes(d.data_counter),
         font: { size: "caption2" },
       },
     ],
