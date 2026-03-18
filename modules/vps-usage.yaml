@@ -11,11 +11,11 @@ scriptings:
 widgets:
   - name: "bandwagonhost-usage"
 
-# Module env (set VEID and API_KEY when installing):
+# Module env (set BWH_VEID and BWH_API_KEY when installing):
 #
 #   modules:
 #     - url: "https://raw.githubusercontent.com/juvenn/egern-kit/main/modules/vps-usage.yaml"
 #       enabled: true
 #       env:
-#         VEID: "your_veid_here"
-#         API_KEY: "your_api_key_here"
+#         BWH_VEID: "your_veid_here"
+#         BWH_API_KEY: "your_api_key_here"

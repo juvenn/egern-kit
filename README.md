@@ -34,10 +34,10 @@ Display VPS data usage on iOS home screen and lock screen widgets.
 2. Edit the module, add env variables:
    | Key | Value |
    |-----|-------|
-   | `VEID` | Your BandwagonHost VPS ID |
-   | `API_KEY` | Your BandwagonHost API key |
+   | `BWH_VEID` | Your BandwagonHost VPS ID |
+   | `BWH_API_KEY` | Your BandwagonHost API key |
 
-   > Find these at [KiwiVM Control Panel](https://kiwivm.64clouds.com/main-controls) → API
+   > Find these at KiwiVM Control Panel → API
 3. Go to **Analytics** tab → **Widget Gallery**, the widget should appear
 4. Long press iOS home screen → add Egern widget → select "bandwagonhost-usage"
 

@@ -403,11 +403,11 @@ function buildAccessoryInline(d) {
 // --- Main ---
 
 export default async function (ctx) {
-  const veid = ctx.env.VEID;
-  const apiKey = ctx.env.API_KEY;
+  const veid = ctx.env.BWH_VEID;
+  const apiKey = ctx.env.BWH_API_KEY;
 
   if (!veid || !apiKey) {
-    return errorWidget("Set VEID & API_KEY in module env");
+    return errorWidget("Set BWH_VEID & BWH_API_KEY in module env");
   }
 
   let data;
