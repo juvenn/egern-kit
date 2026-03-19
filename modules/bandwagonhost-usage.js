@@ -143,19 +143,17 @@ function buildSmall(d, title) {
         ],
       },
       { type: "spacer" },
-      // Progress bar
-      progressBar(ratio, color, 6),
-      // Label (left) + percentage (right)
+      // Usage (left) + percentage (right)
       {
         type: "stack",
         direction: "row",
-        alignItems: "center",
+        alignItems: "end",
         children: [
           {
             type: "text",
             text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data),
-            font: { size: "caption1", weight: "medium" },
-            textColor: "#FFFFFFCC",
+            font: { size: "subheadline", weight: "semibold" },
+            textColor: "#FFFFFFEE",
             maxLines: 1,
             minScale: 0.7,
           },
@@ -163,11 +161,13 @@ function buildSmall(d, title) {
           {
             type: "text",
             text: Math.round(ratio * 100) + "%",
-            font: { size: "caption1", weight: "bold", family: "Menlo" },
+            font: { size: "subheadline", weight: "bold", family: "Menlo" },
             textColor: color,
           },
         ],
       },
+      // Progress bar
+      progressBar(ratio, color, 6),
     ],
   };
 }
@@ -208,19 +208,17 @@ function buildMedium(d, title) {
         ],
       },
       { type: "spacer" },
-      // Progress bar
-      progressBar(ratio, color, 6),
-      // Label (left) + percentage (right)
+      // Usage (left) + percentage (right)
       {
         type: "stack",
         direction: "row",
-        alignItems: "center",
+        alignItems: "end",
         children: [
           {
             type: "text",
-            text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data) + " · " + days + "d to reset",
-            font: { size: "caption1", weight: "medium" },
-            textColor: "#FFFFFFCC",
+            text: formatBytes(d.data_counter) + " / " + formatBytes(d.plan_monthly_data),
+            font: { size: "subheadline", weight: "semibold" },
+            textColor: "#FFFFFFEE",
             maxLines: 1,
             minScale: 0.7,
           },
@@ -228,8 +226,24 @@ function buildMedium(d, title) {
           {
             type: "text",
             text: Math.round(ratio * 100) + "%",
-            font: { size: "caption1", weight: "bold", family: "Menlo" },
+            font: { size: "subheadline", weight: "bold", family: "Menlo" },
             textColor: color,
+          },
+        ],
+      },
+      // Progress bar
+      progressBar(ratio, color, 6),
+      // Reset info
+      {
+        type: "stack",
+        direction: "row",
+        children: [
+          { type: "spacer" },
+          {
+            type: "text",
+            text: days + "d to reset",
+            font: { size: "caption2", weight: "medium" },
+            textColor: "#FFFFFF80",
           },
         ],
       },
