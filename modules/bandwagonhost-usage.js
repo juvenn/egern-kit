@@ -144,7 +144,7 @@ function buildSmall(d, title) {
           {
             type: "text",
             text: title,
-            font: { size: "caption1", weight: "semibold" },
+            font: { size: "headline", weight: "heavy" },
             textColor: "#FFFFFFB0",
           },
         ],
@@ -209,7 +209,7 @@ function buildMedium(d, title) {
           {
             type: "text",
             text: title,
-            font: { size: "caption1", weight: "semibold" },
+            font: { size: "headline", weight: "heavy" },
             textColor: "#FFFFFFB0",
           },
         ],
