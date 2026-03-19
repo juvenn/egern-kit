@@ -205,7 +205,9 @@ function buildMedium(d, title) {
             font: { size: "caption1", weight: "semibold" },
             textColor: "#FFFFFF99",
           },
-          { type: "spacer" },
+        ],
+      },
+      { type: "spacer" },
       // Progress bar
       progressBar(ratio, color, 6),
       // Label (left) + percentage (right)
