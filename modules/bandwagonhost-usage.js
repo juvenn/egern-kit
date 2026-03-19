@@ -18,10 +18,17 @@ function formatBytes(bytes) {
 }
 
 function usageColor(ratio) {
-  if (ratio < 0.6) return "#34D399";
-  if (ratio < 0.85) return "#FBBF24";
-  return "#F87171";
+  if (ratio < 0.6) return "#F48FB1";
+  if (ratio < 0.85) return "#FFB74D";
+  return "#FF6B6B";
 }
+
+const BG_GRADIENT = {
+  type: "linear",
+  colors: ["#1A73E8", "#0D2137"],
+  startPoint: { x: 0, y: 0 },
+  endPoint: { x: 0.5, y: 1 },
+};
 
 function daysUntil(timestamp) {
   const now = Date.now() / 1000;
@@ -41,7 +48,7 @@ function progressBar(ratio, color, height) {
     direction: "row",
     height: height,
     borderRadius: height / 2,
-    backgroundColor: "#FFFFFF1A",
+    backgroundColor: "#FFFFFF25",
     children: [
       {
         type: "stack",
@@ -50,7 +57,7 @@ function progressBar(ratio, color, height) {
         borderRadius: height / 2,
         backgroundGradient: {
           type: "linear",
-          colors: [color, color + "99"],
+          colors: [color, color + "BB"],
           startPoint: { x: 0, y: 0 },
           endPoint: { x: 1, y: 0 },
         },
@@ -72,7 +79,7 @@ function errorWidget(title, message) {
     type: "widget",
     padding: 16,
     gap: 8,
-    backgroundColor: { light: "#1C1C1E", dark: "#1C1C1E" },
+    backgroundGradient: BG_GRADIENT,
     children: [
       {
         type: "stack",
@@ -83,7 +90,7 @@ function errorWidget(title, message) {
           {
             type: "image",
             src: "sf-symbol:exclamationmark.triangle.fill",
-            color: "#FBBF24",
+            color: "#FFD166",
             width: 14,
             height: 14,
           },
@@ -91,7 +98,7 @@ function errorWidget(title, message) {
             type: "text",
             text: title,
             font: { size: "caption1", weight: "semibold" },
-            textColor: "#FFFFFF99",
+            textColor: "#FFFFFFCC",
           },
         ],
       },
@@ -100,7 +107,7 @@ function errorWidget(title, message) {
         type: "text",
         text: message,
         font: { size: "caption1" },
-        textColor: "#FBBF24",
+        textColor: "#FFD166",
       },
     ],
   };
@@ -117,7 +124,7 @@ function buildSmall(d, title) {
     type: "widget",
     padding: 16,
     gap: 10,
-    backgroundColor: { light: "#1C1C1E", dark: "#1C1C1E" },
+    backgroundGradient: BG_GRADIENT,
     refreshAfter: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
     children: [
       // Header
@@ -132,13 +139,13 @@ function buildSmall(d, title) {
             src: "sf-symbol:server.rack",
             width: 14,
             height: 14,
-            color: "#FFFFFF99",
+            color: "#8AB4F8",
           },
           {
             type: "text",
             text: title,
             font: { size: "caption1", weight: "semibold" },
-            textColor: "#FFFFFF99",
+            textColor: "#FFFFFFB0",
           },
         ],
       },
@@ -182,7 +189,7 @@ function buildMedium(d, title) {
     type: "widget",
     padding: 16,
     gap: 10,
-    backgroundColor: { light: "#1C1C1E", dark: "#1C1C1E" },
+    backgroundGradient: BG_GRADIENT,
     refreshAfter: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
     children: [
       // Header
@@ -197,13 +204,13 @@ function buildMedium(d, title) {
             src: "sf-symbol:server.rack",
             width: 14,
             height: 14,
-            color: "#FFFFFF99",
+            color: "#8AB4F8",
           },
           {
             type: "text",
             text: title,
             font: { size: "caption1", weight: "semibold" },
-            textColor: "#FFFFFF99",
+            textColor: "#FFFFFFB0",
           },
         ],
       },
