@@ -36,6 +36,7 @@ Display VPS data usage on iOS home screen and lock screen widgets.
    |-----|-------|
    | `BWH_VEID` | Your BandwagonHost VPS ID |
    | `BWH_API_KEY` | Your BandwagonHost API key |
+   | `HOST_TITLE` | *(optional)* Custom widget title, default "BandwagonHost" |
 
    > Find these at KiwiVM Control Panel → API
 3. Go to **Analytics** tab → **Widget Gallery**, the widget should appear

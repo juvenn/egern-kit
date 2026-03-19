@@ -67,7 +67,7 @@ function progressBar(ratio, color, height) {
 
 // --- Error widget ---
 
-function errorWidget(message) {
+function errorWidget(title, message) {
   return {
     type: "widget",
     padding: 16,
@@ -89,7 +89,7 @@ function errorWidget(message) {
           },
           {
             type: "text",
-            text: "BandwagonHost",
+            text: title,
             font: { size: "caption1", weight: "semibold" },
             textColor: "#FFFFFF99",
           },
@@ -108,7 +108,7 @@ function errorWidget(message) {
 
 // --- Layout builders ---
 
-function buildSmall(d) {
+function buildSmall(d, title) {
   const ratio = d.data_counter / d.plan_monthly_data;
   const color = usageColor(ratio);
   const days = daysUntil(d.data_next_reset);
@@ -136,7 +136,7 @@ function buildSmall(d) {
           },
           {
             type: "text",
-            text: "BandwagonHost",
+            text: title,
             font: { size: "caption1", weight: "semibold" },
             textColor: "#FFFFFF99",
           },
@@ -172,7 +172,7 @@ function buildSmall(d) {
   };
 }
 
-function buildMedium(d) {
+function buildMedium(d, title) {
   const ratio = d.data_counter / d.plan_monthly_data;
   const color = usageColor(ratio);
   const days = daysUntil(d.data_next_reset);
@@ -201,13 +201,11 @@ function buildMedium(d) {
           },
           {
             type: "text",
-            text: "BandwagonHost",
+            text: title,
             font: { size: "caption1", weight: "semibold" },
             textColor: "#FFFFFF99",
           },
-        ],
-      },
-      { type: "spacer" },
+          { type: "spacer" },
       // Progress bar
       progressBar(ratio, color, 6),
       // Label (left) + percentage (right)
@@ -237,7 +235,7 @@ function buildMedium(d) {
   };
 }
 
-function buildAccessoryRectangular(d) {
+function buildAccessoryRectangular(d, shortTitle) {
   const ratio = d.data_counter / d.plan_monthly_data;
   const days = daysUntil(d.data_next_reset);
 
@@ -260,7 +258,7 @@ function buildAccessoryRectangular(d) {
           },
           {
             type: "text",
-            text: "BWH " + Math.round(ratio * 100) + "%",
+            text: shortTitle + " " + Math.round(ratio * 100) + "%",
             font: { size: "caption1", weight: "bold" },
             maxLines: 1,
           },
@@ -278,7 +276,7 @@ function buildAccessoryRectangular(d) {
   };
 }
 
-function buildAccessoryCircular(d) {
+function buildAccessoryCircular(d, shortTitle) {
   const ratio = d.data_counter / d.plan_monthly_data;
 
   return {
@@ -294,7 +292,7 @@ function buildAccessoryCircular(d) {
       },
       {
         type: "text",
-        text: "BWH",
+        text: shortTitle,
         font: { size: "caption2" },
         textAlign: "center",
         opacity: 0.6,
@@ -304,7 +302,7 @@ function buildAccessoryCircular(d) {
   };
 }
 
-function buildAccessoryInline(d) {
+function buildAccessoryInline(d, shortTitle) {
   const ratio = d.data_counter / d.plan_monthly_data;
 
   return {
@@ -312,7 +310,7 @@ function buildAccessoryInline(d) {
     children: [
       {
         type: "text",
-        text: "BWH " + Math.round(ratio * 100) + "% | " + formatBytes(d.data_counter),
+        text: shortTitle + " " + Math.round(ratio * 100) + "% | " + formatBytes(d.data_counter),
         font: { size: "caption2" },
       },
     ],
@@ -325,8 +323,11 @@ export default async function (ctx) {
   const veid = ctx.env.BWH_VEID;
   const apiKey = ctx.env.BWH_API_KEY;
 
+  const title = ctx.env.HOST_TITLE || "BandwagonHost";
+  const shortTitle = title.substring(0, 3).toUpperCase();
+
   if (!veid || !apiKey) {
-    return errorWidget("Set BWH_VEID & BWH_API_KEY in module env");
+    return errorWidget(title, "Set BWH_VEID & BWH_API_KEY in module env");
   }
 
   let data;
@@ -352,7 +353,7 @@ export default async function (ctx) {
     if (cached) {
       data = cached;
     } else {
-      return errorWidget(e.message || "Request failed");
+      return errorWidget(title, e.message || "Request failed");
     }
   }
 
@@ -360,14 +361,14 @@ export default async function (ctx) {
 
   switch (family) {
     case "systemMedium":
-      return buildMedium(data);
+      return buildMedium(data, title);
     case "accessoryRectangular":
-      return buildAccessoryRectangular(data);
+      return buildAccessoryRectangular(data, shortTitle);
     case "accessoryCircular":
-      return buildAccessoryCircular(data);
+      return buildAccessoryCircular(data, shortTitle);
     case "accessoryInline":
-      return buildAccessoryInline(data);
+      return buildAccessoryInline(data, shortTitle);
     default:
-      return buildSmall(data);
+      return buildSmall(data, title);
   }
 }

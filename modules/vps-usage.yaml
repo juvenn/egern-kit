@@ -19,3 +19,4 @@ widgets:
 #       env:
 #         BWH_VEID: "your_veid_here"
 #         BWH_API_KEY: "your_api_key_here"
+#         HOST_TITLE: "BandwagonHost"    # optional, customizes widget title
