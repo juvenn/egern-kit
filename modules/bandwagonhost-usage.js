@@ -341,7 +341,7 @@ export default async function (ctx) {
     }
 
     // Cache successful response
-    ctx.storage.setJSON("bwh_cache", {
+    ctx.storage.setJSON("bwh_cache_" + veid, {
       data_counter: data.data_counter,
       plan_monthly_data: data.plan_monthly_data,
       data_next_reset: data.data_next_reset,
@@ -349,7 +349,7 @@ export default async function (ctx) {
     });
   } catch (e) {
     // Fallback to cache
-    const cached = ctx.storage.getJSON("bwh_cache");
+    const cached = ctx.storage.getJSON("bwh_cache_" + veid);
     if (cached) {
       data = cached;
     } else {
